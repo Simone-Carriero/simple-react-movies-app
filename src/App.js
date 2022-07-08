@@ -64,12 +64,17 @@ function App() {
           />
         </MoviesContainer>
 
-        <MoviesContainer>
-          <MovieList 
-            movies={favoriteMovies}
-            handleFavorite={removeFromFavorite}
+        
+          <MovieListHeading 
+            heading='Favorite' 
           />
-        </MoviesContainer>
+          <MoviesContainer>
+            <MovieList 
+              movies={favoriteMovies}
+              handleFavorite={removeFromFavorite}
+            />
+          </MoviesContainer>
+       
      
 
 
