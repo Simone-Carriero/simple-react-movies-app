@@ -4,7 +4,8 @@ import MovieListHeading from "./components/movie-list-heading.component";
 import SearchBox from "./components/search-box.component";
 import MoviesContainer from "./components/movies-container/movies-container.component";
 import MovieList from "./components/movie-list/movie-list.component"
-
+import FavoriteIcon from "./components/favorite-icon.component"
+import RemoveIcon from "./components/remove-icon.component"
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   const [movies, setMovies] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [favoriteMovies, setFavoriteMovies] = useState([])
+  
 
   const addToFavorite = (movie) => {
     const newFavorite = [...favoriteMovies, movie]
@@ -57,10 +59,12 @@ function App() {
         />
       </div>
 
+    
         <MoviesContainer>
           <MovieList 
             movies={movies}
             handleFavorite={addToFavorite}
+            icon={FavoriteIcon}
           />
         </MoviesContainer>
 
@@ -72,6 +76,7 @@ function App() {
             <MovieList 
               movies={favoriteMovies}
               handleFavorite={removeFromFavorite}
+              icon={RemoveIcon}
             />
           </MoviesContainer>
        
