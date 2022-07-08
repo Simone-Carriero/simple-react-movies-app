@@ -1,0 +1,54 @@
+.image-container {
+  position: relative;
+}
+
+
+
+.overlay {
+    display: none;
+}
+
+
+
+
+
+
+
+
+@media only screen and (min-width: 1200px) {
+    .image-container {
+        cursor: pointer;
+    }
+
+    .image-container:hover {
+        transform: scale(1.1);
+        transition: all .8s ease-out;
+    }
+
+    .opacity {
+         opacity: 1;   
+    }
+
+    .overlay {
+        display: unset;
+        position: absolute;
+        top: 80%;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        opacity: 0;
+        background-color: rgba(0, 0, 0, .3);
+    }
+
+    .overlay-container-inside {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .image-container:hover .overlay {
+         opacity: 1;
+    }
+}

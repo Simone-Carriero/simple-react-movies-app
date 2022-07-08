@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import MovieListHeading from "./components/movie-list-heading.component";
 import SearchBox from "./components/search-box.component";
 import MoviesContainer from "./components/movies-container/movies-container.component";
-import MovieList from "./components/movie-list.component"
+import MovieList from "./components/movie-list/movie-list.component"
 
 
 
