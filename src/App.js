@@ -12,7 +12,9 @@ function App() {
 
   const [movies, setMovies] = useState([])
   const [searchValue, setSearchValue] = useState('')
-  const [favoriteMovies, setFavoriteMovies] = useState([])
+  const [favoriteMovies, setFavoriteMovies] = useState(
+    JSON.parse(localStorage.getItem('favoriteMovies')) || []
+  )
   
 
   const addToFavorite = (movie) => {
@@ -41,6 +43,11 @@ function App() {
       setMovies(response.Search)
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies))
+  }, [favoriteMovies])
+
   useEffect(() => {
     fetchingData(searchValue)
   }, [searchValue])
