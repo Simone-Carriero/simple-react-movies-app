@@ -26,3 +26,7 @@ img {
   object-fit: cover;
 }
 
+.row {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}

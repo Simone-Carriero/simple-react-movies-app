@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 
 import MovieListHeading from "./components/movie-list-heading.component";
 import SearchBox from "./components/search-box.component";
-import MoviesContainer from "./components/movies-container/movies-container.component";
+import MoviesContainer from "./components/movies-container.component";
 import MovieList from "./components/movie-list/movie-list.component"
 import FavoriteIcon from "./components/favorite-icon.component"
 import RemoveIcon from "./components/remove-icon.component"
@@ -56,29 +56,41 @@ function App() {
 
   return (
     <div className="container-fluid">
-      <div className="row d-flex align-items-center p-3">
-        <MovieListHeading
-          heading="Movies"
-        />
-        <SearchBox 
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-        />
+      
+      <div className="vh-100 d-flex flex-column">
+        <div className="row d-flex align-items-center pt-3">
+          <MovieListHeading
+            heading="Movies"
+          />
+          <SearchBox 
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+          />
+        </div>
+  
+        <div className='row flex-grow-1'>
+        
+          <MoviesContainer>
+            <MovieList 
+              movies={movies}
+              handleFavorite={addToFavorite}
+              icon={FavoriteIcon}
+            />
+          </MoviesContainer>
+        </div>
+
       </div>
 
+      <div className="vh-100 d-flex flex-column">
     
-        <MoviesContainer>
-          <MovieList 
-            movies={movies}
-            handleFavorite={addToFavorite}
-            icon={FavoriteIcon}
-          />
-        </MoviesContainer>
-
-        
+        <div className="row pt-3">
           <MovieListHeading 
             heading='Favorite' 
           />
+        </div>
+      
+        
+        <div className="row flex-grow-1">
           <MoviesContainer>
             <MovieList 
               movies={favoriteMovies}
@@ -86,7 +98,10 @@ function App() {
               icon={RemoveIcon}
             />
           </MoviesContainer>
-       
+        </div>
+      
+        
+       </div>
      
 
 
