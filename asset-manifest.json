@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Simone-Carriero/simple-react-movies-app/static/css/main.c5039fc8.css",
+    "main.js": "/Simone-Carriero/simple-react-movies-app/static/js/main.ff0f5887.js",
+    "static/js/787.8d863a66.chunk.js": "/Simone-Carriero/simple-react-movies-app/static/js/787.8d863a66.chunk.js",
+    "service-worker.js": "/Simone-Carriero/simple-react-movies-app/service-worker.js",
+    "index.html": "/Simone-Carriero/simple-react-movies-app/index.html",
+    "main.c5039fc8.css.map": "/Simone-Carriero/simple-react-movies-app/static/css/main.c5039fc8.css.map",
+    "main.ff0f5887.js.map": "/Simone-Carriero/simple-react-movies-app/static/js/main.ff0f5887.js.map",
+    "787.8d863a66.chunk.js.map": "/Simone-Carriero/simple-react-movies-app/static/js/787.8d863a66.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c5039fc8.css",
+    "static/js/main.ff0f5887.js"
+  ]
+}
