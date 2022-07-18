@@ -4,9 +4,11 @@ const MovieList = ({ movies, handleFavorite, icon }) => {
 
     const IconComponent = icon;
 
-    const mappedMovies = movies.map(movie => (
-        <div className="image-container" key={movie.imdbID} onClick={() => handleFavorite(movie)}>
-            <img src={movie.Poster} alt={`${movie.Title} poster`} />
+    const moviesWithCover = movies.filter(movie => movie.poster_path)
+
+    const mappedMovies = moviesWithCover.map(movie => (
+        <div className="image-container" key={movie.id} onClick={() => handleFavorite(movie)}>
+            <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.original_title} poster`} />
             <div className="overlay-container">
                 <div className="icon-container">
                     <IconComponent />
@@ -19,6 +21,8 @@ const MovieList = ({ movies, handleFavorite, icon }) => {
             </div>
         </div>
     ))
+
+   
 
     return (
         <>

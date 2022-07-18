@@ -21,7 +21,7 @@ function App() {
     const newFavorite = [...favoriteMovies, movie]
     
     setFavoriteMovies(prevState => {
-      const alreadyInFavorite = prevState.some(item => item.imdbID === movie.imdbID)
+      const alreadyInFavorite = prevState.some(item => item.id === movie.id)
 
       return alreadyInFavorite ? prevState : newFavorite
 
@@ -29,18 +29,20 @@ function App() {
   }
 
   const removeFromFavorite = (movie) => {
-    setFavoriteMovies(prevState => prevState.filter(item => item.imdbID !== movie.imdbID))
+    setFavoriteMovies(prevState => prevState.filter(item => item.id !== movie.id))
   }
 
 
-  const fetchingData = async (searchValue) => {
+  const fetchingData = async () => {
 
-    const data = await fetch(`http://www.omdbapi.com/?apikey=79555010&type=movie&s=${searchValue}`)
+    const apiKey = "d18faed178ecfe803a99a44d89e2d11b";
+
+    const data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchValue}`)
     const response = await data.json()
 
-    if (response.Search) {
+    if (response.results) {
 
-      setMovies(response.Search)
+      setMovies(response.results)
     }
   }
 
