@@ -15,6 +15,14 @@ function App() {
   const [favoriteMovies, setFavoriteMovies] = useState(
     JSON.parse(localStorage.getItem('favoriteMovies')) || []
   )
+
+  useEffect(() => {
+    localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies))
+  }, [favoriteMovies])
+
+  useEffect(() => {
+    fetchingData(searchValue)
+  }, [searchValue])
   
 
   const addToFavorite = (movie) => {
@@ -46,13 +54,7 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies))
-  }, [favoriteMovies])
-
-  useEffect(() => {
-    fetchingData(searchValue)
-  }, [searchValue])
+ 
   
 
 
@@ -98,6 +100,7 @@ function App() {
               movies={favoriteMovies}
               handleFavorite={removeFromFavorite}
               icon={RemoveIcon}
+              type='favoriteMovies'
             />
           </MoviesContainer>
         </div>

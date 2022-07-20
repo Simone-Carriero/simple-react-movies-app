@@ -2,6 +2,12 @@
   position: relative;
 }
 
+img {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+
 .overlay-container {
     display: flex;
     flex-direction: column;
@@ -40,11 +46,6 @@
 
     .image-container {
         cursor: pointer;
-    }
-
-    .image-container:hover {
-        transform: scale(1.1);
-        transition: all .8s ease-out;
     }
 
     .overlay-container {

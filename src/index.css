@@ -12,21 +12,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #141414;
   color: #FFFFFF;
-  overflow-x: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@media only screen and (min-width: 700px) {
+  .swiper-slide {
+      width: 28rem !important;
+    }
 }
 
-img {
-  width: 15rem;
-  max-width: 23rem;
-  object-fit: cover;
-}
-
-.row {
-  overflow-x: auto;
-  scrollbar-width: thin;
+@media only screen and (min-width: 1000px) {
+  .swiper-slide {
+      width: 20rem !important;
+    }
 }
