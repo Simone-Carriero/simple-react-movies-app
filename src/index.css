@@ -14,9 +14,10 @@ body {
   color: #FFFFFF;
 }
 
-@media only screen and (min-width: 700px) {
+
+@media only screen and (min-width: 500px) {
   .swiper-slide {
-      width: 28rem !important;
+      width: 18rem !important;
     }
 }
 

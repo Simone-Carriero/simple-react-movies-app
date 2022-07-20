@@ -7,6 +7,7 @@ import MovieList from "./components/movie-list/movie-list.component"
 import FavoriteIcon from "./components/favorite-icon.component"
 import RemoveIcon from "./components/remove-icon.component"
 
+import './App.css'
 
 function App() {
 
@@ -21,7 +22,9 @@ function App() {
   }, [favoriteMovies])
 
   useEffect(() => {
-    fetchingData(searchValue)
+    if (searchValue) {
+      fetchingData(searchValue)
+    }
   }, [searchValue])
   
 
@@ -59,9 +62,9 @@ function App() {
 
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid app-container">
       
-      <div className="vh-100 d-flex flex-column">
+      <div className="vh-100 d-flex flex-column section-container">
         <div className="row d-flex align-items-center pt-3">
           <MovieListHeading
             heading="Movies"
@@ -85,7 +88,7 @@ function App() {
 
       </div>
 
-      <div className="vh-100 d-flex flex-column">
+      <div className="vh-100 d-flex flex-column section-container">
     
         <div className="row pt-3">
           <MovieListHeading 
