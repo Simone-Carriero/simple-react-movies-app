@@ -1,17 +1,22 @@
 import React from 'react'
 import SwiperContainer from '../swiper.component';
 import { SwiperSlide } from 'swiper/react';
-import "./movie-list.style.css"
+import "./movie-list.styles.css"
+import Spinner from '../spinner/spinner.component';
 
 const MovieList = ({ movies, handleFavorite, icon }) => {
 
     const IconComponent = icon;
 
-    const moviesWithCover = movies.filter(movie => movie.poster_path)
-
-    const mappedMovies = moviesWithCover.map(movie => (
+    const mappedMovies = movies.filter(movie => movie.poster_path).map(movie => (
         <SwiperSlide className="image-container" key={movie.id} onClick={() => handleFavorite(movie)}>
-            <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.original_title} poster`} />
+            {
+                !movie.poster_path ?
+                    <Spinner />
+                    :
+                    <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.original_title} poster`} />
+
+            }
             <div className="overlay-container">
                 <div className="icon-container">
                     <IconComponent />

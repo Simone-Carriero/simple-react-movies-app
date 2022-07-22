@@ -6,12 +6,14 @@ import MoviesContainer from "./components/movies-container.component";
 import MovieList from "./components/movie-list/movie-list.component"
 import FavoriteIcon from "./components/favorite-icon.component"
 import RemoveIcon from "./components/remove-icon.component"
+import Spinner from './components/spinner/spinner.component';
 
 import './App.css'
 
 function App() {
 
   const [movies, setMovies] = useState([])
+  const [loading, setLoading] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const [favoriteMovies, setFavoriteMovies] = useState(
     JSON.parse(localStorage.getItem('favoriteMovies')) || []
@@ -24,6 +26,8 @@ function App() {
   useEffect(() => {
     if (searchValue) {
       fetchingData(searchValue)
+    } else {
+      setMovies([])
     }
   }, [searchValue])
   
@@ -45,16 +49,24 @@ function App() {
 
 
   const fetchingData = async () => {
-
     const apiKey = "d18faed178ecfe803a99a44d89e2d11b";
 
-    const data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchValue}`)
-    const response = await data.json()
+    setLoading(true)
+    try {
+      const data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchValue}`)
+      const response = await data.json()
 
-    if (response.results) {
+      if (response.results) {
 
-      setMovies(response.results)
+        setMovies(response.results)
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
     }
+
+    
   }
 
  
@@ -76,17 +88,27 @@ function App() {
         </div>
   
         <div className='row flex-grow-1'>
-        
           <MoviesContainer>
-            <MovieList 
-              movies={movies}
-              handleFavorite={addToFavorite}
-              icon={FavoriteIcon}
-            />
-          </MoviesContainer>
+          {
+            loading ? <Spinner />
+              : (
+                  <>
+                    <MovieList 
+                      movies={movies}
+                      handleFavorite={addToFavorite}
+                      icon={FavoriteIcon}
+                    />
+                  </>
+                
+                  )
+            }
+          
+            </MoviesContainer>
         </div>
 
       </div>
+
+
 
       <div className="vh-100 d-flex flex-column section-container">
     

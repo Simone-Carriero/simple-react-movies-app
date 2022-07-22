@@ -3,7 +3,7 @@ const MoviesContainer = ({ children }) => {
 
 
     return (
-        <div className="movie-list-container d-flex align-items-center gap-5 p-5">
+        <div className="movie-list-container d-flex align-items-center justify-content-center gap-5 p-5">
             {children}
         </div>
     )
