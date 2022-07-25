@@ -29,6 +29,7 @@ const SwiperContainer = ({children}) => {
         <Swiper
             spaceBetween={20}
             slidesPerView={'auto'}
+            lazy={true}
             effect={"coverflow"}
             grabCursor={true}
             centeredSlides={true}
