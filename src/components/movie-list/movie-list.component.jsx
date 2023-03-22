@@ -1,36 +1,35 @@
-import React from 'react'
+import React from 'react';
 import SwiperContainer from '../swiper.component';
 import { SwiperSlide } from 'swiper/react';
-import "./movie-list.styles.css"
-
+import './movie-list.styles.css';
 
 const MovieList = ({ movies, handleFavorite, icon }) => {
+  const filteredMovies = movies.filter((movie) => movie.poster_path);
 
-    const IconComponent = icon;
+  const IconComponent = icon;
 
-    const mappedMovies = movies.filter(movie => movie.poster_path).map(movie => (
-        <SwiperSlide className="image-container" key={movie.id} onClick={() => handleFavorite(movie)}>
-            
-            <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.original_title} poster`} />
+  const mappedMovies = filteredMovies.map((movie) => (
+    <SwiperSlide
+      className='image-container'
+      key={movie.id}>
+      <img
+        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+        alt={`${movie.original_title} poster`}
+      />
 
-            
-            <div className="overlay-container">
+      <div
+        className='overlay-container'
+        onClick={() => handleFavorite(movie)}>
+        <IconComponent />
+      </div>
+    </SwiperSlide>
+  ));
 
-                <IconComponent />
-             
-            </div>
-        </SwiperSlide>
-    ))
+  return (
+    <>
+      <SwiperContainer movies={filteredMovies}>{mappedMovies}</SwiperContainer>
+    </>
+  );
+};
 
-   
-
-    return (
-        <>
-            <SwiperContainer>
-                {mappedMovies}
-            </SwiperContainer>
-        </>
-    )
-}
-
-export default MovieList
+export default MovieList;

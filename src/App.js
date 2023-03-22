@@ -1,142 +1,123 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect, useMemo } from 'react';
 
-import MovieListHeading from "./components/movie-list-heading.component";
-import SearchBox from "./components/search-box.component";
-import MoviesContainer from "./components/movies-container.component";
-import MovieList from "./components/movie-list/movie-list.component"
-import FavoriteIcon from "./components/favorite-icon.component"
-import RemoveIcon from "./components/remove-icon.component"
+import MovieListHeading from './components/movie-list-heading.component';
+import SearchBox from './components/search-box.component';
+import MoviesContainer from './components/movies-container.component';
+import MovieList from './components/movie-list/movie-list.component';
+import FavoriteIcon from './components/favorite-icon.component';
+import RemoveIcon from './components/remove-icon.component';
 import Spinner from './components/spinner/spinner.component';
 
-import './App.css'
+const moviesLocalStorage = () => {
+  return localStorage.getItem('favoriteMovies')
+    ? JSON.parse(localStorage.getItem('favoriteMovies'))
+    : [];
+};
 
-function App() {
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [favoriteMovies, setFavoriteMovies] = useState(moviesLocalStorage());
 
-  const [movies, setMovies] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
-  const [favoriteMovies, setFavoriteMovies] = useState(
-    JSON.parse(localStorage.getItem('favoriteMovies')) || []
-  )
+  const fetchingData = async (query) => {
+    const apiKey = 'd18faed178ecfe803a99a44d89e2d11b';
 
-  useEffect(() => {
-    localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies))
-  }, [favoriteMovies])
-
-  useEffect(() => {
-    if (searchValue) {
-      fetchingData(searchValue)
-    } else {
-      setMovies([])
-    }
-  }, [searchValue])
-  
-
-  const addToFavorite = (movie) => {
-    const newFavorite = [...favoriteMovies, movie]
-    
-    setFavoriteMovies(prevState => {
-      const alreadyInFavorite = prevState.some(item => item.id === movie.id)
-
-      return alreadyInFavorite ? prevState : newFavorite
-
-    })
-  }
-
-  const removeFromFavorite = (movie) => {
-    setFavoriteMovies(prevState => prevState.filter(item => item.id !== movie.id))
-  }
-
-
-  const fetchingData = async () => {
-    const apiKey = "d18faed178ecfe803a99a44d89e2d11b";
-
-    setLoading(true)
+    setLoading(true);
     try {
-      const data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchValue}`)
-      const response = await data.json()
-
-      if (response.results) {
-
-        setMovies(response.results)
-      }
+      const data = await fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`
+      );
+      const response = await data.json();
+      setMovies(response?.results);
     } catch (error) {
       console.log(error);
+      setMovies([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
+  };
 
-    
-  }
+  const debounce = () => {
+    let timeoutID;
+    return (searchValue) => {
+      clearTimeout(timeoutID);
+      timeoutID = setTimeout(() => {
+        fetchingData(searchValue);
+      }, 1500);
+    };
+  };
+  const optimizedDebounce = useMemo(() => debounce(), []);
 
- 
-  
+  useEffect(() => {
+    localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
+  }, [favoriteMovies]);
 
+  const addToFavorite = (movie) => {
+    const newFavorite = [...favoriteMovies, movie];
+
+    setFavoriteMovies((prevState) => {
+      const alreadyInFavorite = prevState.some((item) => item.id === movie.id);
+
+      return alreadyInFavorite ? prevState : newFavorite;
+    });
+  };
+
+  const removeFromFavorite = (movie) => {
+    setFavoriteMovies((prevState) =>
+      prevState.filter((item) => item.id !== movie.id)
+    );
+  };
 
   return (
-    <div className="container-fluid app-container">
-      
-      <div className="vh-100 d-flex flex-column section-container">
-        <div className="row d-flex align-items-center pt-3">
-          <MovieListHeading
-            heading="Movies"
-          />
-          <SearchBox 
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
-        </div>
-  
-        <div className='row flex-grow-1'>
-          <MoviesContainer>
-          {
-            loading ? <Spinner />
-              : (
-                  <>
-                    <MovieList 
-                      movies={movies}
-                      handleFavorite={addToFavorite}
-                      icon={FavoriteIcon}
-                    />
-                  </>
-                
-                  )
-            }
-          
-            </MoviesContainer>
-        </div>
+    <main className='app-container'>
+      <div className='vh-100 d-flex flex-column section-container'>
+        <nav className='navbar'>
+          <div className='container-fluid'>
+            <MovieListHeading heading='Movies' />
+            <SearchBox
+              searchValue={searchValue}
+              handleChange={(e) => {
+                setSearchValue(e.target.value);
+                optimizedDebounce(e.target.value);
+              }}
+            />
+          </div>
+        </nav>
 
+        <MoviesContainer>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <MovieList
+                movies={movies}
+                handleFavorite={addToFavorite}
+                icon={FavoriteIcon}
+              />
+            </>
+          )}
+        </MoviesContainer>
       </div>
 
+      <div className='vh-100 d-flex flex-column section-container'>
+        <section>
+          <div className='container-fluid py-2'>
+            <MovieListHeading heading='Favorite' />
+          </div>
+        </section>
 
-
-      <div className="vh-100 d-flex flex-column section-container">
-    
-        <div className="row pt-3">
-          <MovieListHeading 
-            heading='Favorite' 
+        <MoviesContainer>
+          <MovieList
+            movies={favoriteMovies}
+            handleFavorite={removeFromFavorite}
+            icon={RemoveIcon}
+            type='favoriteMovies'
           />
-        </div>
-      
-        
-        <div className="row flex-grow-1">
-          <MoviesContainer>
-            <MovieList 
-              movies={favoriteMovies}
-              handleFavorite={removeFromFavorite}
-              icon={RemoveIcon}
-              type='favoriteMovies'
-            />
-          </MoviesContainer>
-        </div>
-      
-        
-       </div>
-     
-
-
-    </div>
+        </MoviesContainer>
+      </div>
+    </main>
   );
-}
+};
 
 export default App;

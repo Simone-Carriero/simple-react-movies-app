@@ -11,7 +11,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #141414;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
+.app-container {
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+}
 
+.section-container {
+  scroll-snap-align: start;
+}

@@ -3,7 +3,7 @@ import { Swiper } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
-import "swiper/css/effect-coverflow";
+import 'swiper/css/effect-coverflow';
 
 /*breakpoints={{
 // when window width is >= 640px
@@ -20,33 +20,29 @@ import "swiper/css/effect-coverflow";
             }}
             */
 
+import { EffectCoverflow } from 'swiper';
 
-import { EffectCoverflow } from "swiper";
-
-
-const SwiperContainer = ({children}) => {
-    return (
-        <Swiper
-            spaceBetween={20}
-            slidesPerView={'auto'}
-            lazy={true}
-            effect={"coverflow"}
-            grabCursor={true}
-            centeredSlides={true}
-            coverflowEffect={{
-                rotate: 20,
-                stretch: 0,
-                depth: 50,
-                modifier: 1,
-                slideShadows: true,
-            }}
-            modules={[EffectCoverflow]}
-        >
-            {children}
-        </Swiper>
-    );
+const SwiperContainer = ({ movies, children }) => {
+  return (
+    <Swiper
+      spaceBetween={20}
+      slidesPerView={'auto'}
+      lazy={true}
+      effect={'coverflow'}
+      grabCursor={true}
+      centeredSlides={true}
+      initialSlide={0}
+      coverflowEffect={{
+        rotate: 20,
+        stretch: 0,
+        depth: 50,
+        modifier: 1,
+        slideShadows: true,
+      }}
+      modules={[EffectCoverflow]}>
+      {children}
+    </Swiper>
+  );
 };
 
-export default SwiperContainer
-
-
+export default SwiperContainer;

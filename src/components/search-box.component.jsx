@@ -1,15 +1,18 @@
-const SearchBox = ({searchValue, setSearchValue}) => {
-    return (
-        <div className='col-6'>
-            <input
-                className="form-control"
-                type="search"
-                placeholder="Type to search..."
-                value={searchValue}
-                onChange={({ target }) => setSearchValue(target.value)}
-            />
-        </div>
-    )
-}
+const SearchBox = ({ searchValue, handleChange }) => {
+  return (
+    <form
+      className='d-flex'
+      role='search'>
+      <input
+        className='form-control'
+        type='search'
+        placeholder='Search...'
+        aria-label='Search'
+        value={searchValue}
+        onChange={handleChange}
+      />
+    </form>
+  );
+};
 
-export default SearchBox
+export default SearchBox;
